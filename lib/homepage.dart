@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gojoapp/service/database.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -13,6 +14,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final FirestoreService firestoreService = FirestoreService();
   SpeechToText speechToText = SpeechToText();
   //late stt.SpeechToText _speech;
   bool _isListening = false;
@@ -44,6 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
           setState(() {
             _isListening = false;
           });
+
+          firestoreService.addText(_text);
           speechToText.stop();
         },
         child: Stack(children: [
